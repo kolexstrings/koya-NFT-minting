@@ -1,32 +1,40 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import Web3Modal from 'web3Modal';
+import { ethers, Contract } from 'ethers';
+
+const { abi } = require ('./artifacts/contracts/koyaNft.json');
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const initWeb3 = async () => {
+    return new Promise(async (resolve, reject) => {
+
+      const web3Modal = new Web3Modal ({
+
+        cacheProvider: true
+      });
+
+      const connection = await web3Modal.connect();
+
+      const provider = new ethers.providers.Web3Provider(connection);
+
+      const { chainId } = await provider.getNetwork();
+
+      const signer = provider.getSigner();
+
+      const contract = new Contract('deployedContractAddress',
+       abi,
+       signer);
+
+       resolve({contract});
+
+    })
+  }
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
     </div>
   )
 }
