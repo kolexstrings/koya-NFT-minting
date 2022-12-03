@@ -46,8 +46,15 @@
 
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
 
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+require('dotenv').config();
+const { INFURA_API_KEY, MNEMONIC } = process.env;
+
+
+
+
 module.exports = {
-  contracts_build_director: 'src/artifacts/contracts',
+  contracts_build_directory: 'src/artifacts/contracts',
   /**
    * Networks define how you connect to your ethereum client and let you set the
    * defaults web3 uses to send transactions. If you don't specify one truffle
@@ -65,11 +72,13 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    // development: {
-    //  host: "127.0.0.1",     // Localhost (default: none)
-    //  port: 8545,            // Standard Ethereum port (default: none)
-    //  network_id: "*",       // Any network (default: none)
-    // },
+
+
+    development: {
+     host: "127.0.0.1",     // Localhost (default: none)
+     port: 7545,            // Standard Ethereum port (default: none)
+     network_id: "5777",       // Any network (default: none)
+    },
     //
     // An additional network, but with some advanced options…
     // advanced: {
@@ -84,12 +93,19 @@ module.exports = {
     // Useful for deploying to a public network.
     // Note: It's important to wrap the provider as a function to ensure truffle uses a new provider every time.
     // goerli: {
-    //   provider: () => new HDWalletProvider(MNEMONIC, `https://goerli.infura.io/v3/${PROJECT_ID}`),
+    //   provider: () => new HDWalletProvider(MNEMONIC, `https://goerli.infura.io/v3/19b804b8c1894296973ee6ac48878b44`),
     //   network_id: 5,       // Goerli's id
     //   confirmations: 2,    // # of confirmations to wait between deployments. (default: 0)
     //   timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
     //   skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     // },
+
+    goerli: {
+      provider: () => new HDWalletProvider(MNEMONIC, INFURA_API_KEY),
+      network_id: '5',
+      chain_id: 5
+      // gas: 4465030
+    }
     //
     // Useful for private networks
     // private: {

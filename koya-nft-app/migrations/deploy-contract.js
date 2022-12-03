@@ -1,5 +1,8 @@
- const koyaNft = artifacts.require('koyaNft');
+ 
+ const KoyaNft = artifacts.require("KoyaNft");
 
- module.export = function (deployer) {
-    deployer.deploy(koyaNft);
+ module.exports = function(deployer) {
+   // Deploy the SolidityContract contract as our only task
+   deployer.deploy(KoyaNft);
  };
+ 
